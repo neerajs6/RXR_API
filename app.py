@@ -4,11 +4,11 @@ import json
 app = Flask(__name__)
 
 conn = pymysql.connect(
-    host = 'endpoint link',
-    port = '3306',
-    user = 'master username',
-    password = 'master password',
-    db = 'db name'
+    host = 'database-1.cbhzog3pc3ub.us-east-2.rds.amazonaws.com',
+    port = 3306,
+    user = 'admin',
+    password = 'RxR12345',
+    db = 'RxR'
 )
 
 @app.route('/')
