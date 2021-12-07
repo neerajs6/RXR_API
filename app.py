@@ -32,7 +32,7 @@ def get_311():
         json_data.append(dict(zip(row_headers, result)))
     return json.dumps(json_data)
 
-@app.route('/get_311')
+@app.route('/get_dob')
 def get_311():
     year = request.args.get("year")
     bble = request.args.get("bbl")
@@ -40,7 +40,7 @@ def get_311():
     cursor = conn.cursor()
 
     q = """
-    SELECT * FROM cleaned_311 WHERE YEAR = {} and BBLE = {}
+    SELECT * FROM cleaned_dob WHERE YEAR = {} and BBLE = {}
     """.format(year, bble)
 
     rv = cursor.execute(q)
