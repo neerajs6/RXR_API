@@ -3,6 +3,8 @@ from flaskext.mysql import MySQL
 import json
 import pymysql
 
+from datetime import datetime
+
 app = Flask(__name__)
 mysql = MySQL(app)
 
@@ -23,13 +25,17 @@ def hello_world():
 def get_311():
 
     cursor = conn.cursor()
-    cursor.execute('''SELECT * FROM RxR.
-    SampleTable''')
+    cursor.execute('''SELECT CREATED_DATE, CLOSED_DATE, BBL FROM RxR.311_cleaned_data LIMIT 20''')
     row_headers = [x[0] for x in cursor.description]
     rv = cursor.fetchall()
     json_data = []
     for result in rv:
         json_data.append(dict(zip(row_headers, result)))
+    for i in json_data:
+        if 'CREATED_DATE' in i.keys() and type(i['CREATED_DATE']) == datetime:
+            i['CREATED_DATE'] = i['CREATED_DATE'].strftime("%Y/%m/%d")
+        if 'CLOSED_DATE' in i.keys() and type(i['CLOSED_DATE']) == datetime:
+            i['CLOSED_DATE'] = i['CLOSED_DATE'].strftime("%Y/%m/%d")
     return json.dumps(json_data)
 
 @app.route('/get_dob')
