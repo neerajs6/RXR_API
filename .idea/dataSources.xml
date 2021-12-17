@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@database-1.cbhzog3pc3ub.us-east-2.rds.amazonaws.com" uuid="5e1e9eaf-7dad-4c83-aa95-cdb8e63588da">
+    <data-source source="LOCAL" name="MySQL - RxR@database-1.cbhzog3pc3ub.us-east-2.rds.amazonaws.com" uuid="043d4d7a-fefb-4ce1-95ca-db35ad55b5c4">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://database-1.cbhzog3pc3ub.us-east-2.rds.amazonaws.com:3306</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="@database-1.cbhzog3pc3ub.us-east-2.rds.amazonaws.com [2]" uuid="2bbda42b-699a-4673-a83e-deee5c698cb8">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://database-1.cbhzog3pc3ub.us-east-2.rds.amazonaws.com:3306</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
+      <jdbc-url>jdbc:mysql://database-1.cbhzog3pc3ub.us-east-2.rds.amazonaws.com:3306/RxR</jdbc-url>
     </data-source>
   </component>
 </project>
