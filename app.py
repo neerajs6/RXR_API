@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request, jsonify, abort
 from flask.globals import request
 from flaskext.mysql import MySQL
 import json
@@ -16,6 +16,35 @@ conn = pymysql.connect(
     password='RxR12345',
     db='RxR',
 )
+
+def get_paginated_list(results, url, start, limit):
+    start = int(start)
+    limit = int(limit)
+    count = len(results)
+    if count < start or limit < 0:
+        abort(404)
+    # make response
+    obj = {}
+    obj['start'] = start
+    obj['limit'] = limit
+    obj['count'] = count
+    # make URLs
+    # make previous url
+    if start == 1:
+        obj['previous'] = ''
+    else:
+        start_copy = max(1, start - limit)
+        limit_copy = start - 1
+        obj['previous'] = url + '?start=%d&limit=%d' % (start_copy, limit_copy)
+    # make next url
+    if start + limit > count:
+        obj['next'] = ''
+    else:
+        start_copy = start + limit
+        obj['next'] = url + '?start=%d&limit=%d' % (start_copy, limit)
+    # finally extract result according to bounds
+    obj['results'] = results[(start - 1):(start - 1 + limit)]
+    return obj
 
 @app.route('/')
 def hello_world():
@@ -36,7 +65,12 @@ def get_311():
             i['CREATED_DATE'] = i['CREATED_DATE'].strftime("%Y/%m/%d")
         if 'CLOSED_DATE' in i.keys() and type(i['CLOSED_DATE']) == datetime:
             i['CLOSED_DATE'] = i['CLOSED_DATE'].strftime("%Y/%m/%d")
-    return json.dumps(json_data)
+    return jsonify(get_paginated_list(
+        json_data, 
+        '/311?year={}&'.format(year), 
+        start=request.args.get('start', 1), 
+        limit=request.args.get('limit', 5)
+    ))
 
 @app.route('/dob')
 def get_dob():
@@ -53,9 +87,11 @@ def get_dob():
             i['CREATED_DATE'] = i['CREATED_DATE'].strftime("%Y/%m/%d")
         if 'CLOSED_DATE' in i.keys() and type(i['CLOSED_DATE']) == datetime:
             i['CLOSED_DATE'] = i['CLOSED_DATE'].strftime("%Y/%m/%d")
-    return json.dumps(json_data)
-
+    return jsonify(get_paginated_list(
+        json_data, 
+        '/dob?year={}&'.format(year), 
+        start=request.args.get('start', 1), 
+        limit=request.args.get('limit', 5)))
 
 if __name__ == '__main__':
     app.run()
-'http://127.0.0.1:5000/311?year=2018'
