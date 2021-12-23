@@ -16,11 +16,17 @@ dob_pagination_schema = DobPaginationSchema()
 
 
 class Index(Resource):
-    @use_kwargs({'page': fields.Int(missing=1),
-                 'per_page': fields.Int(missing=20)})
     def get(self, page=1):
-        paginated_dob = Dob.get_all().paginate(page, 1).items
-        return dob_pagination_schema.dump(paginated_dob), HTTPStatus.OK
+        results= Dob.get_by_year(2020)
+        res ={}
+        for r in results:
+            res[r.id] = {
+                'BBL': r.BBL,
+                'LATITUDE': r.LATITUDE,
+                'LONGITUDE': r.LONGITUDE,
+                'Job_Type': r.Job_Type
+            }
+        return res
 
 
 class Products(Resource):
@@ -38,11 +44,11 @@ class Products(Resource):
 
 class Random(Resource):
     def get(self):
-        @use_kwargs({'page': fields.Int(missing=1),
-                     'per_page': fields.Int(missing=20)})
-        def get(self, year, page, per_page):
-            paginated_recipes = Dob.get_by_year(year, page, per_page)
-            return dob_pagination_schema.dump(paginated_recipes).data, HTTPStatus.OK
+        res = Dob.query.filter_by(year='2020').distinct()
+        res_text = ''
+        for r in res:
+            res_text += r.Job_Type + ', '
+        return res_text
 
 
 class DobListResource(Resource):
@@ -50,7 +56,7 @@ class DobListResource(Resource):
                  'per_page': fields.Int(missing=20)})
     def get(self, page, per_page):
         paginated_dob = Dob.get_all(page, per_page)
-        return dob_pagination_schema.dump(paginated_dob), HTTPStatus.OK
+        return dob_pagination_schema.dump(paginated_dob).data, HTTPStatus.OK
 
     def post(self):
         json_data = request.get_json()

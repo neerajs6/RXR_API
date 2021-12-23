@@ -5,7 +5,7 @@ class DobSchema(Schema):
     class Meta:
         ordered = True
 
-        id = fields.Integer(dump_only=True)
+        id = fields.Integer()
         BOROUGH = fields.Integer()
         Job_Type = fields.String(validate=[validate.Length(max=50)])
         Block = fields.Integer()
@@ -28,4 +28,4 @@ class DobSchema(Schema):
         BBL = fields.Float()
 
 class DobPaginationSchema(PaginationSchema):
-    data = fields.Nested(DobSchema,attribute='items', many = True)
+    data = fields.Nested(DobSchema,attribute='items')

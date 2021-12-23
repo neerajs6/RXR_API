@@ -26,16 +26,16 @@ class Dob(db.Model):
     BBL = db.Column(db.Integer)
 
     @classmethod
-    def get_by_year(cls, year, page, per_page):
+    def get_by_year(cls, year):
         return cls.query.filter_by(year=year)
 
     @classmethod
     def get_by_BBL(cls, BBL):
-        return cls.query.filter_by(BBL=BBL).first()
+        return cls.query.filter_by(BBL=BBL)
 
     @classmethod
     def get_all(cls,page, per_page):
-        return cls.query.filter_by(year=2020).order_by(desc(cls.year)).paginate(page=page, per_page=per_page)
+        return cls.query.filter_by(year=2020).paginate(page=page, per_page=per_page)
 
 
     def save(self):
