@@ -50,7 +50,7 @@ class DobListResource(Resource):
                  'per_page': fields.Int(missing=20)})
     def get(self, page, per_page):
         paginated_dob = Dob.get_all(page, per_page)
-        return dob_pagination_schema.dump(paginated_dob).data,HTTPStatus.OK
+        return dob_pagination_schema.dump(paginated_dob), HTTPStatus.OK
 
     def post(self):
         json_data = request.get_json()
