@@ -5,7 +5,7 @@ from flask_restful import Api
 from config import Config
 from extensions import db
 from models.dob import Dob
-from resources.dob import DobResource, DobListResource, Index, Random, Products
+from resources.dob import DobResource, DobListResource, Index, Random, Products, Index2
 
 
 def create_app():
@@ -29,6 +29,8 @@ def register_resources(app):
     api.add_resource(Index,'/index')
     api.add_resource(Random, '/rand')
     api.add_resource(Products,'/products/<int:page>')
+    api.add_resource(Index2, '/index2')
+
 
 
 if __name__ == '__main__':

@@ -16,18 +16,51 @@ dob_pagination_schema = DobPaginationSchema()
 
 
 class Index(Resource):
-    def get(self, page=1):
-        results= Dob.get_by_year(2020)
+    def get(self):
+        page = request.args.get("page", 1, type=int)
+        pageSize = request.args.get("pageSize", 10, type=int)
+
+        results= Dob.get_by_year(2020).paginate(page, pageSize)
         res ={}
-        for r in results:
-            res[r.id] = {
+
+        res = {
+            "results": [{r.id: {
+                'ID': r.id,
                 'BBL': r.BBL,
                 'LATITUDE': r.LATITUDE,
                 'LONGITUDE': r.LONGITUDE,
                 'Job_Type': r.Job_Type
-            }
+            }} for r in results.items],
+        }
         return res
 
+class Index2(Resource):
+    @use_kwargs({'q': fields.Str(missing=''),
+                'page': fields.Int(missing=1),
+                'per_page': fields.Int(missing=10),
+                'sort': fields.Str(missing='year'),
+                'order': fields.Str(missing='desc')})
+    def get(self, q, page, per_page, sort, order):
+        if sort not in ['year', 'BBL']:
+            sort = 'year'
+        if order not in ['asc', 'desc']:
+            order = 'desc'
+        page = request.args.get("page", 1, type=int)
+        per_page = request.args.get("per_page", 10, type=int)
+
+        results= Dob.get_all(q,page,per_page,sort,order).paginate(page=page, per_page=per_page)
+        res ={}
+
+        res = {
+            "results": [{r.id: {
+                'ID': r.id,
+                'BBL': r.BBL,
+                'LATITUDE': r.LATITUDE,
+                'LONGITUDE': r.LONGITUDE,
+                'Job_Type': r.Job_Type
+            }} for r in results.items],
+        }
+        return res
 
 class Products(Resource):
     def get(self,page=1):
