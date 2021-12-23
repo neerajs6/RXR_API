@@ -87,11 +87,12 @@ def get_dob():
             i['CREATED_DATE'] = i['CREATED_DATE'].strftime("%Y/%m/%d")
         if 'CLOSED_DATE' in i.keys() and type(i['CLOSED_DATE']) == datetime:
             i['CLOSED_DATE'] = i['CLOSED_DATE'].strftime("%Y/%m/%d")
-    return jsonify(get_paginated_list(
+    '''return jsonify(get_paginated_list(
         json_data, 
         '/dob?year={}&'.format(year), 
         start=request.args.get('start', 1), 
-        limit=request.args.get('limit', 5)))
+        limit=request.args.get('limit', 5)))'''
+    return json.dumps(json_data)
 
 if __name__ == '__main__':
     app.run()
