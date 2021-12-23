@@ -31,8 +31,6 @@ def register_resources(app):
     api.add_resource(Products,'/products/<int:page>')
 
 
-
-
 if __name__ == '__main__':
     app = create_app()
     app.run()

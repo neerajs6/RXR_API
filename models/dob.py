@@ -34,33 +34,8 @@ class Dob(db.Model):
         return cls.query.filter_by(BBL=BBL).first()
 
     @classmethod
-    def get_all(cls):
-        return cls.query.filter_by(year=2020).order_by(desc(cls.id))
-
-    def data(self):
-        return {
-            'id': self.id,
-            'BOROUGH': self.BOROUGH,
-            'Job_Type': self.Job_Type,
-            'Block': self.Block,
-            'Lot': self.Lot,
-            'Zip_Code': self.Zip_Code,
-            'Work_Type': self.Work_Type,
-            'Permit_Status': self.Permit_Status,
-            'Filing_Status': self.Filing_Status,
-            'Permit_Type': self.Permit_Type,
-            'Permit_Subtype': self.Permit_Subtype,
-            'Issuance_Date': self.Issuance_Date,
-            'Expiration_Date': self.Expiration_Date,
-            'Job_Start_Date': self.Job_Start_Date,
-            'LATITUDE': self.LATITUDE,
-            'LONGTUDE': self.LONGITUDE,
-            'COUNCIL_DISTRICT': self.COUNCIL_DISTRICT,
-            'CENSUS_TRACT': self.CENSUS_TRACT,
-            'NTA_NAME': self.NTA_NAME,
-            'year': self.year,
-            'BBL': self.BBL
-        }
+    def get_all(cls,page, per_page):
+        return cls.query.filter_by(year=2020).order_by(desc(cls.year)).paginate(page=page, per_page=per_page)
 
 
     def save(self):

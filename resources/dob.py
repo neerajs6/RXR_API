@@ -10,7 +10,7 @@ from models.dob import Dob
 from schemas.dob import DobSchema
 
 dob_schema = DobSchema()
-dob_list_schema = DobSchema(many=True)
+dob_list_schema = DobSchema()
 
 dob_pagination_schema = DobPaginationSchema()
 
@@ -46,50 +46,29 @@ class Random(Resource):
 
 
 class DobListResource(Resource):
-    def get(self):
-        data = []
-        for element in dob_list:
-            data.append(element.data)
-        return {'data': data}, HTTPStatus.OK
+    @use_kwargs({'page': fields.Int(missing=1),
+                 'per_page': fields.Int(missing=20)})
+    def get(self, page, per_page):
+        paginated_dob = Dob.get_all(page, per_page)
+        return dob_pagination_schema.dump(paginated_dob).data,HTTPStatus.OK
 
     def post(self):
-        data = request.get_json()
-        element = Dob(
-            BOROUGH=data['BOROUGH'],
-            Job_Type=data['Job_Type'],
-            Block=data['Block'],
-            Lot=data['Lot'],
-            Zip_Code=data['Zip_Code'],
-            Work_Type=data['Work_Type'],
-            Permit_Status=data['Permit_Status'],
-            Filing_Status=data['Filing_Status'],
-            Permit_Type=data['Permit_Type'],
-            Permit_Subtype=data['Permit_Subtype'],
-            Issuance_Date=data['Issuance_Date'],
-            Expiration_Date=data['Expiration_Date'],
-            Job_Start_Date=data['Job_Start_Date'],
-            LATITUDE=data['LATITUDE'],
-            LONGITUDE=data['LONGITUDE'],
-            COUNCIL_DISTRICT=data['COUNCIL_DISTRICT'],
-            CENSUS_TRACT=data['CENSUS_TRACT'],
-            NTA_NAME=data['NTA_NAME'],
-            year=data['year'],
-            BBL=data['BBL'],
-        )
-        dob_list.append(element)
-
-        return element.data, HTTPStatus.CREATED
-
+        json_data = request.get_json()
+        data, errors = dob_schema.load(data=json_data)
+        if errors:
+            return {'message': 'Validation errors', 'errors': errors},HTTPStatus.BAD_REQUEST
+        dob = Dob(**data)
+        dob.save()
+        return dob_schema.dump(dob).data, HTTPStatus.CREATED
 
 class DobResource(Resource):
-
-    def get(self, dob_id):
-        element = next((element for element in dob_list if element.id ==
-                        element), None)
-        if element is None:
+    def get(self, year):
+        dob = Dob.get_by_year(year=year)
+        if dob is None:
             return {'message': 'not found'}, HTTPStatus.NOT_FOUND
+        data = dob_schema.dump(dob).data
 
-        return element.data, HTTPStatus.OK
+        return data, HTTPStatus.OK
 
     def put(self, element_id):
         data = request.get_json()
