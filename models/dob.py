@@ -1,9 +1,5 @@
 from extensions import db
-from sqlalchemy import asc, desc
-
-
-def or_(param, param1):
-    pass
+from sqlalchemy import asc, desc, or_
 
 
 class Dob(db.Model):
@@ -47,7 +43,8 @@ class Dob(db.Model):
             sort_logic = desc(getattr(cls, sort))
         '''return cls.query.filter(or_(cls.year.ilike(keyword) ,
                                     cls.BBL.ilike(keyword))).order_by(sort_logic).paginate(page=page, per_page=per_page)'''
-        return cls.query.filter(cls.year)
+        return cls.query.filter(or_(cls.year.ilike(keyword) ,
+                                    cls.BBL.ilike(keyword))).paginate(page=page, per_page=per_page)
 
 
 def save(self):
