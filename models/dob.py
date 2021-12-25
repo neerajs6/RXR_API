@@ -40,6 +40,7 @@ class Dob(db.Model):
         return cls.query.filter(or_(cls.year.ilike(keyword) ,
                                     cls.BBL.ilike(keyword))).paginate(page=page, per_page=per_page)
 
+
     @classmethod
     def get_all2(cls, q1,q2, page, per_page):
         keyword1 = '%{keyword1}%'.format(keyword1=q1)

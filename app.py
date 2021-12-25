@@ -5,7 +5,7 @@ from flask_restful import Api
 from config import Config
 from extensions import db
 from models.dob import Dob
-from resources.dob import Index, Random, Products, Year, BBL, yearBBL
+from resources.dob import Index, Random, Products, Year, BBL, yearBBL, Dobs
 
 
 def create_app():
@@ -30,7 +30,6 @@ def register_resources(app):
     api.add_resource(Year, '/year')
     api.add_resource(BBL, '/BBL')
     api.add_resource(yearBBL, '/YearAndBBL')
-
 
 
 if __name__ == '__main__':

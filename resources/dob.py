@@ -29,12 +29,12 @@ class Index(Resource):
         return res
 
 class Year(Resource):
-    @use_kwargs({'q': fields.Int(missing=0),
+    @use_kwargs({'year': fields.Int(missing=0),
                 'page': fields.Int(missing=1),
                 'per_page': fields.Int(missing=10)
                 },location='query')
-    def get(self, q, page, per_page):
-        results= Dob.get_all(q,page,per_page)
+    def get(self, year, page, per_page):
+        results= Dob.get_all(year,page,per_page)
         res ={}
 
         res = {
@@ -49,12 +49,12 @@ class Year(Resource):
         return res
 
 class BBL(Resource):
-    @use_kwargs({'q': fields.Int(missing=0),
+    @use_kwargs({'BBL': fields.Int(missing=0),
                 'page': fields.Int(missing=1),
                 'per_page': fields.Int(missing=10)
                 },location='query')
-    def get(self, q, page, per_page):
-        results= Dob.get_all(q,page,per_page)
+    def get(self, BBL, page, per_page):
+        results= Dob.get_all(BBL,page,per_page)
         res ={}
 
         res = {
@@ -67,6 +67,7 @@ class BBL(Resource):
             }} for r in results.items],
         }
         return res
+
 
 class yearBBL(Resource):
     @use_kwargs({'year': fields.Int(missing=0),
