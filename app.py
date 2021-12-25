@@ -5,7 +5,7 @@ from flask_restful import Api
 from config import Config
 from extensions import db
 from models.dob import Dob
-from resources.dob import Index, Random, Products, Year, BBL, yearBBL, Dobs
+from resources.dob import Index, Random, Products, Year, BBL, yearBBL
 
 
 def create_app():
