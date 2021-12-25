@@ -28,24 +28,60 @@ class Index(Resource):
         }
         return res
 
-class Index2(Resource):
-    @use_kwargs({'q': fields.Str(missing=''),
+class Year(Resource):
+    @use_kwargs({'q': fields.Int(missing=0),
                 'page': fields.Int(missing=1),
-                'per_page': fields.Int(missing=10),
-                'sort': fields.Str(missing='year'),
-                'order': fields.Str(missing='desc')})
-    def get(self, q, page, per_page, sort, order):
-        if sort not in ['year', 'BBL']:
-            sort = 'year'
-        if order not in ['asc', 'desc']:
-            order = 'desc'
-
-        results= Dob.get_all(q,page,per_page,sort,order)
+                'per_page': fields.Int(missing=10)
+                },location='query')
+    def get(self, q, page, per_page):
+        results= Dob.get_all(q,page,per_page)
         res ={}
 
         res = {
             "results": [{r.id: {
-                'ID': r.id,
+                'year': r.year,
+                'BBL': r.BBL,
+                'LATITUDE': r.LATITUDE,
+                'LONGITUDE': r.LONGITUDE,
+                'Job_Type': r.Job_Type
+            }} for r in results.items],
+        }
+        return res
+
+class BBL(Resource):
+    @use_kwargs({'q': fields.Int(missing=0),
+                'page': fields.Int(missing=1),
+                'per_page': fields.Int(missing=10)
+                },location='query')
+    def get(self, q, page, per_page):
+        results= Dob.get_all(q,page,per_page)
+        res ={}
+
+        res = {
+            "results": [{r.id: {
+                'year': r.year,
+                'BBL': r.BBL,
+                'LATITUDE': r.LATITUDE,
+                'LONGITUDE': r.LONGITUDE,
+                'Job_Type': r.Job_Type
+            }} for r in results.items],
+        }
+        return res
+
+class yearBBL(Resource):
+    @use_kwargs({'year': fields.Int(missing=0),
+                 'BBL': fields.Int(missing=0),
+                'page': fields.Int(missing=1),
+                'per_page': fields.Int(missing=10)},
+                location='query')
+    def get(self, year,BBL, page, per_page):
+
+        results= Dob.get_all2(year,BBL,page,per_page)
+        res ={}
+
+        res = {
+            "results": [{r.id: {
+                'year': r.year,
                 'BBL': r.BBL,
                 'LATITUDE': r.LATITUDE,
                 'LONGITUDE': r.LONGITUDE,
