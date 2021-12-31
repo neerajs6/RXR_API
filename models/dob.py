@@ -1,5 +1,5 @@
 from extensions import db
-from sqlalchemy import asc, desc, or_
+from sqlalchemy import  or_
 
 
 class Dob(db.Model):
@@ -45,8 +45,6 @@ class Dob(db.Model):
     def get_all2(cls, q1,q2, page, per_page):
         keyword1 = '%{keyword1}%'.format(keyword1=q1)
         keyword2 = '%{keyword2}%'.format(keyword2=q2)
-        '''return cls.query.filter(or_(cls.year.ilike(keyword) ,
-                                    cls.BBL.ilike(keyword))).order_by(sort_logic).paginate(page=page, per_page=per_page)'''
         return cls.query.filter(cls.year.ilike(q1)).filter(
                                     cls.BBL.ilike(q2)).paginate(page=page, per_page=per_page)
 
