@@ -22,7 +22,7 @@ def collect_dob_data(previous_month):
        'Superintendent Business Name', "Owner's Business Type", 'Non-Profit',
        "Owner's Business Name", "Owner's First Name", "Owner's Last Name",
        "Owner's House #", "Owner's House Street Name", "Owner’s House City'",
-       "Owner’s House State", "Owner’s House Zip Code", Owner's Phone #,
+       "Owner’s House State", "Owner’s House Zip Code", "Owner's Phone #",
        'DOBRunDate', 'PERMIT_SI_NO', 'LATITUDE', 'LONGITUDE',
        'COUNCIL_DISTRICT', 'CENSUS_TRACT', 'NTA_NAME']
 

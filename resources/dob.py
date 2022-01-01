@@ -33,7 +33,7 @@ class BBL(Resource):
                 'per_page': fields.Int(missing=10)
                 },location='query')
     def get(self, BBL, page, per_page):
-        results= Dob.get_all(BBL,page,per_page)
+        results= Dob.get_by_BBL(BBL,page,per_page)
         res ={}
 
         res = {

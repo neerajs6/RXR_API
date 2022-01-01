@@ -27,19 +27,12 @@ class Dob(db.Model):
     BBL = db.Column(db.Integer)
 
     @classmethod
-    def get_by_year(cls, year):
-        return cls.query.filter_by(year=year)
+    def get_by_year(cls, year,page,per_page):
+        return cls.query.filter_by(year=year).paginate(page=page, per_page=per_page)
 
     @classmethod
-    def get_by_BBL(cls, BBL):
-        return cls.query.filter_by(BBL=BBL)
-
-    @classmethod
-    def get_all(cls,q,page, per_page):
-        keyword = '%{keyword}%'.format(keyword=q)
-        return cls.query.filter(or_(cls.year.ilike(keyword) ,
-                                    cls.BBL.ilike(keyword))).paginate(page=page, per_page=per_page)
-
+    def get_by_BBL(cls, BBL,page,per_page):
+        return cls.query.filter_by(BBL=BBL).paginate(page=page, per_page=per_page)
 
     @classmethod
     def get_all2(cls, q1,q2, page, per_page):
