@@ -45,7 +45,7 @@ def register_resources(app):
     # 311 embeddings resources
     api.add_resource(Embeddings,'/embeddings')
 
-
+ 
 if __name__ == '__main__':
     app = create_app()
     app.run()
