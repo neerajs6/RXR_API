@@ -1,6 +1,5 @@
 Flask
 httpie
-
 Flask-Restful
 Flask-SQLAlchemy
 Flask-Migrate
