@@ -30,3 +30,4 @@ SQLAlchemy==1.4.29
 urllib3==1.26.7
 webargs==8.0.1
 Werkzeug==2.0.2
+uswgi
