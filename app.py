@@ -7,7 +7,7 @@ from extensions import db
 from models.dob import Dob
 
 # Dob data
-from resources.dob import  Year, BBL, yearBBL
+from resources.dob import Year, BBL, yearBBL
 from resources.dob_model_data import Dob_Model
 
 # 311 data
