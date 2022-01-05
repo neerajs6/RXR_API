@@ -6,4 +6,4 @@ Flask-Migrate
 mysqlclient
 marshmallow
 webargs
-tensorflow
+

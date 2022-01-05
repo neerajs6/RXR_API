@@ -13,7 +13,7 @@ class Year(Resource):
                 'per_page': fields.Int(missing=10)
                 },location='query')
     def get(self, year, page, per_page):
-        results= Dob.get_all(year,page,per_page)
+        results= Dob.get_by_year(year,page,per_page)
         res ={}
 
         res = {
